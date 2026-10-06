@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Employee</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f7fb;
+        }
+
+        .navbar {
+            background: #1e3a8a;
+            color: white;
+            padding: 18px 35px;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            width: 500px;
+            max-width: 92%;
+            margin: 80px auto;
+        }
+
+        .delete-box {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .delete-box h2 {
+            color: #dc2626;
+            margin-bottom: 20px;
+        }
+
+        .delete-box p {
+            color: #555;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .employee-name {
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .cancel-btn {
+            background: #6b7280;
+            color: white;
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 6px;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .cancel-btn:hover {
+            background: #4b5563;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="navbar">
+        <h1>👨‍💼 Employee Management System</h1>
+    </div>
+
+    <div class="container">
+
+        <div class="delete-box">
+
+            <h2>⚠️ Delete Employee</h2>
+
+            <p>
+                Are you sure you want to delete
+                <span class="employee-name">
+                    {{ employee.name }}
+                </span>?
+                <br>
+                This action cannot be undone.
+            </p>
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="buttons">
+
+                    <button type="submit" class="delete-btn">
+                        Yes, Delete
+                    </button>
+
+                    <a
+                        href="{% url 'dashboard' %}"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

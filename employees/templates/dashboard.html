@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Management System</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+        }
+
+        .logout {
+            background: #ef4444;
+            color: white;
+            text-decoration: none;
+            padding: 9px 18px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .logout:hover {
+            background: #dc2626;
+        }
+
+        /* MAIN */
+        .container {
+            width: 92%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .heading h2 {
+            font-size: 28px;
+        }
+
+        .heading p {
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        .add-btn {
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* CARDS */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card-title {
+            color: #6b7280;
+            font-size: 15px;
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .active {
+            color: #16a34a;
+        }
+
+        /* SEARCH */
+        .search-box {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .search-box form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .search-btn {
+            background: #111827;
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        /* TABLE */
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            overflow-x: auto;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1000px;
+        }
+
+        th {
+            background: #f9fafb;
+            color: #374151;
+            text-align: left;
+            padding: 15px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .edit-btn {
+            background: #f59e0b;
+            color: white;
+            text-decoration: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        .delete-btn {
+            background: #ef4444;
+            color: white;
+            text-decoration: none;
+            padding: 7px 12px;
+            border-radius: 5px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #6b7280;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 800px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .navbar h1 {
+                font-size: 18px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .heading {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box form {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+
+        <h1>👨‍💼 Employee Management System</h1>
+
+        <a href="/admin/logout/" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+
+    <!-- MAIN -->
+    <div class="container">
+
+        <!-- HEADING -->
+        <div class="heading">
+
+            <div>
+                <h2>Admin Dashboard</h2>
+
+                <p>
+                    Manage your employees efficiently.
+                </p>
+            </div>
+
+            <a href="{% url 'add_employee' %}" class="add-btn">
+                + Add Employee
+            </a>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+        <div class="cards">
+
+            <div class="card">
+
+                <div class="card-title">
+                    Total Employees
+                </div>
+
+                <div class="card-value">
+                    {{ total_employees }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    Departments
+                </div>
+
+                <div class="card-value">
+                    {{ departments }}
+                </div>
+
+            </div>
+
+
+            <div class="card">
+
+                <div class="card-title">
+                    System Status
+                </div>
+
+                <div class="card-value active">
+                    ● Active
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH -->
+        <div class="search-box">
+
+            <form method="GET" action="{% url 'search_employee' %}">
+
+                <input
+                    type="text"
+                    name="q"
+                    placeholder="🔍 Search by name, ID, email or department..."
+                >
+
+                <button type="submit" class="search-btn">
+                    Search
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- EMPLOYEE TABLE -->
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Department</th>
+                        <th>Position</th>
+                        <th>Salary</th>
+                        <th>Joining Date</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for employee in employees %}
+
+                    <tr>
+
+                        <td>{{ employee.employee_id }}</td>
+
+                        <td>
+                            <a
+    href="{% url 'employee_profile' employee.id %}"
+    style="text-decoration: none; color: #2563eb;"
+>
+    <strong>{{ employee.name }}</strong>
+</a>
+                    
+                        </td>
+
+                        <td>{{ employee.email }}</td>
+
+                        <td>{{ employee.phone }}</td>
+
+                        <td>{{ employee.department }}</td>
+
+                        <td>{{ employee.position }}</td>
+
+                        <td>₹{{ employee.salary }}</td>
+
+                        <td>{{ employee.joining_date }}</td>
+
+                        <td>
+
+                            <a
+                                href="{% url 'update_employee' employee.id %}"
+                                class="edit-btn"
+                            >
+                                Edit
+                            </a>
+
+                            <a
+                                href="{% url 'delete_employee' employee.id %}"
+                                class="delete-btn"
+                            >
+                                Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+                        <td colspan="9" class="empty">
+                            No employees found.
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Employee Profile</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 23px;
+        }
+
+        .back {
+            color: white;
+            text-decoration: none;
+            background: #2563eb;
+            padding: 9px 18px;
+            border-radius: 7px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 850px;
+            margin: 40px auto;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-icon {
+            width: 90px;
+            height: 90px;
+            background: #2563eb;
+            color: white;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 40px;
+
+            margin: 0 auto 15px;
+        }
+
+        .profile-header h2 {
+            font-size: 28px;
+        }
+
+        .profile-header p {
+            color: #6b7280;
+            margin-top: 6px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .detail-box {
+            background: #f9fafb;
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .label {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .edit {
+            background: #f59e0b;
+            color: white;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 7px;
+        }
+
+        .dashboard {
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            padding: 11px 22px;
+            border-radius: 7px;
+        }
+
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .navbar h1 {
+                font-size: 18px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <h1>👨‍💼 Employee Management System</h1>
+
+        <a href="{% url 'dashboard' %}" class="back">
+            Dashboard
+        </a>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="profile-card">
+
+            <div class="profile-header">
+
+                <div class="profile-icon">
+                    👤
+                </div>
+
+                <h2>{{ employee.name }}</h2>
+
+                <p>{{ employee.position }}</p>
+
+            </div>
+
+
+            <div class="details">
+
+                <div class="detail-box">
+                    <div class="label">Employee ID</div>
+                    <div class="value">
+                        {{ employee.employee_id }}
+                    </div>
+                </div>
+
+
+                <div class="detail-box">
+                    <div class="label">Email</div>
+                    <div class="value">
+                        {{ employee.email }}
+                    </div>
+                </div>
+
+
+                <div class="detail-box">
+                    <div class="label">Phone</div>
+                    <div class="value">
+                        {{ employee.phone }}
+                    </div>
+                </div>
+
+
+                <div class="detail-box">
+                    <div class="label">Department</div>
+                    <div class="value">
+                        {{ employee.department }}
+                    </div>
+                </div>
+
+
+                <div class="detail-box">
+                    <div class="label">Position</div>
+                    <div class="value">
+                        {{ employee.position }}
+                    </div>
+                </div>
+
+
+                <div class="detail-box">
+                    <div class="label">Salary</div>
+                    <div class="value">
+                        ₹{{ employee.salary }}
+                    </div>
+                </div>
+
+
+                <div class="detail-box">
+                    <div class="label">Joining Date</div>
+                    <div class="value">
+                        {{ employee.joining_date }}
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+                <a
+                    href="{% url 'update_employee' employee.id %}"
+                    class="edit"
+                >
+                    ✏️ Edit Employee
+                </a>
+
+                <a
+                    href="{% url 'dashboard' %}"
+                    class="dashboard"
+                >
+                    Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
